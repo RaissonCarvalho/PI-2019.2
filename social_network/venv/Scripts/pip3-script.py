@@ -1,4 +1,4 @@
-#!C:\Users\Raisson\PycharmProjects\web_api03\venv\Scripts\python.exe
+#!C:\Users\Raisson\PycharmProjects\social_network\venv\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==19.0.3','console_scripts','pip3'
 __requires__ = 'pip==19.0.3'
 import re

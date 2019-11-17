@@ -28,6 +28,13 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
             'address',
         )
 
+        def update(self, instance, validated_data):
+            instance.id = instance.id
+            instance.name = validated_data['name']
+            instance.email = validated_data['email']
+            instance.address = validated_data['address']
+            instance.save()
+            return instance
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):

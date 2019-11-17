@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\Raisson\PycharmProjects\web_api03\venv"
+VIRTUAL_ENV="C:\Users\Raisson\PycharmProjects\social_network\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
