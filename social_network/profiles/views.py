@@ -43,24 +43,28 @@ class AddressesList(generics.ListCreateAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
     name = 'addresses-list'
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly)
 
 
 class AddressDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
     name = 'address-detail'
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly)
 
 
 class CommentsList(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     name = 'comments-list'
+    permission_classes = (CommentIsOwnerOrReadOnly,)
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     name = 'comment-detail'
+    permission_classes = (CommentIsOwnerOrReadOnly,)
 
 
 class ApiRoot(generics.GenericAPIView):
@@ -76,38 +80,38 @@ class ApiRoot(generics.GenericAPIView):
             }
         )
 
-# class import_data():
-#     dump_data = open('db.json', 'r')
-#     as_json = json.load(dump_data)
-#
-#     for user in as_json['users']:
-#         # address = Address.objects.create(street=user['address']['street'],
-#         #                                  suite=user['address']['suite'],
-#         #                                  city=user['address']['city'],
-#         #                                  zipcode=user['address']['zipcode'])
-#         # first_name, last_name = user['name'].split(" ")
-#         # new_user = User.objects.create_user(first_name=first_name,
-#         #                                     last_name=last_name,
-#         #                                     username=user['username'],
-#         #                                     email=user['email'],
-#         #                                     password="123456")
-#         Profile.objects.create(id=user['id'],
-#                                name=user['name'],
-#                                email=user['email'],)
-#                                user=new_user,
-#                                 address=address)
-#
-#     for post in as_json['posts']:
-#         profile = Profile.objects.get(id=post['user_id'])
-#         Post.objects.create(id=post['id'],
-#                             title=post['title'],
-#                             body=post['body'],
-#                             userId=post['userId'])
-#
-#     for comment in as_json['comments']:
-#         post = Post.objects.get(id=comment['post_id'])
-#         Comment.objects.create(id=comment['id'],
-#                                name=comment['name'],
-#                                email=comment['email'],
-#                                body=comment['body'],
-#                                post=post)
+class import_data():
+    dump_data = open('db.json', 'r')
+    as_json = json.load(dump_data)
+
+    for user in as_json['users']:
+        address = Address.objects.create(street=user['address']['street'],
+                                         suite=user['address']['suite'],
+                                         city=user['address']['city'],
+                                         zipcode=user['address']['zipcode'])
+        first_name, last_name = user['name'].split(" ")
+        new_user = User.objects.create_user(first_name=first_name,
+                                            last_name=last_name,
+                                            username=user['username'],
+                                            email=user['email'],
+                                            password="123456")
+        Profile.objects.create(id=user['id'],
+                               name=user['name'],
+                               email=user['email'],
+                               user=new_user,
+                               address=address)
+
+    for post in as_json['posts']:
+        profile = Profile.objects.get(id=post['user_id'])
+        Post.objects.create(id=post['id'],
+                            title=post['title'],
+                            body=post['body'],
+                            userId=post['userId'])
+
+    for comment in as_json['comments']:
+        post = Post.objects.get(id=comment['post_id'])
+        Comment.objects.create(id=comment['id'],
+                               name=comment['name'],
+                               email=comment['email'],
+                               body=comment['body'],
+                               post=post)
